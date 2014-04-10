@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+
+  "name": "1Passwordanywhere Extension",
+  "description": "Fill in your 1Password passwords using 1Passwordanywhere on any platform",
+  "version": "0.1",
+
+  "commands": {
+    "_execute_page_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y"
+      }
+    }
+  },
+
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_title": "1Passwordanywhere Extension"
+  },
+
+  "permissions": [
+    "http://*/*",
+    "https://*/*",
+    "tabs",
+    "storage"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+
+  "options_page": "options.html"
+}
