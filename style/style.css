@@ -1,0 +1,69 @@
+.wrapper {
+    width: 250px;
+}
+
+.lock {
+    background-image: url(../images/helper/helper-door-lock-glow-0.png);
+    background-size: 75px 75px;
+    width: 75px;
+    height: 75px;
+    margin: 10px auto;
+
+}
+
+.masterpasswordInput {
+    margin-top: 20px;
+    height: 45px;
+    background-image: url(../images/helper/masterpasswordCenter.png);
+}
+
+.masterpasswordLeft {
+    height: 45px;
+    width: 10px;
+    background-image: url(../images/helper/masterpasswordLeft.png);
+    float: left;
+}
+
+.masterpasswordRight {
+    height: 45px;
+    width: 10px;
+    background-image: url(../images/helper/masterpasswordRight.png);
+    float: right;;
+}
+
+.masterpassword {
+    border: none;
+    height: 25px;
+    margin-top: 10px;
+    background: none;
+    width: 195px;
+}
+
+.masterpassword:focus {
+    outline: none;
+}
+
+.unlock {
+    background: transparent url(../images/helper/helper-unlock-button.png) no-repeat;
+    background-size: 29px 25px;
+    width: 29px;
+    height: 25px;
+    float: right;
+    margin-top: 10px;
+    border-style: none;
+}
+
+.unlock:focus {
+    outline: none;
+}
+
+.error {
+    text-align: center;
+    color: #f00;
+    height: 40px;
+    margin-top: 10px;
+}
+
+.hide {
+    display: none;
+}

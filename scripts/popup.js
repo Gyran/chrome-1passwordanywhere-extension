@@ -2,6 +2,16 @@
     var onepassword = null;
     var tab = null;
 
+    var unlockWrapper = document.getElementById("unlockWrapper");
+    var unlockedWrapper = document.getElementById("unlockedWrapper");
+
+    var btnUnlock = document.getElementById("unlock");
+    btnUnlock.disabled = true;
+    var frmVerify = document.getElementById("frmVerify");
+    var error = document.getElementById("error");
+    var masterpassword = document.getElementById("masterpassword");
+
+
     function init () {
         Q.all([initOnePassword(), getActiveTab()]).spread(function (op, t) {
             onepassword = op;
@@ -17,7 +27,7 @@
         }, function (items) {
             onepassword = new window.OnePassword(items.baseurl);
             onepassword.load().then(function () {
-                btnVerify.disabled = false;
+                btnUnlock.disabled = false;
             });
 
             deferred.resolve(onepassword);
@@ -32,16 +42,27 @@
     }
 
     function verify (event) {
+        error.textContent = "";
         event.preventDefault();
 
-        var password = document.getElementById("masterpassword").value;
+        var password = masterpassword.value;
         if (onepassword.verifyPassword(password)) {
             var domain = getCurrentDomain();
             var webforms = onepassword.webformsFromDomain(domain);
-            fillForm(webforms[0]);
-            //window.close();
+
+            unlockWrapper.classList.add("hide");
+            unlockedWrapper.classList.remove("hide");
+
+            if (webforms.length === 1) {
+                fillForm(webforms[0]);
+            } else if (webforms.length > 1) {
+                // TODO: show a list of possible webforms
+                fillForm(webforms[0]);
+            } else {
+                error.textContent = "No password for this domain found!";
+            }
         } else {
-            alert("wrong password!");
+            error.textContent = "Wrong master password!";
         }
     }
 
@@ -76,11 +97,6 @@
 
         return deferred.promise;
     }
-
-
-    btnVerify = document.getElementById("btnVerify");
-    btnVerify.disabled = true;
-    frmVerify = document.getElementById("frmVerify");
 
     document.addEventListener("DOMContentLoaded", init);
     frmVerify.addEventListener("submit", verify);
