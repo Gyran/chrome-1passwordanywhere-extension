@@ -11,6 +11,8 @@
 
         Q.all([this.getContents(), this.getEncryptionKeys()]).then(function () {
             deferred.resolve();
+        }, function () {
+            deferred.reject();
         });
 
         return deferred.promise;
@@ -73,7 +75,7 @@
         keychainItem.decrypt(keychain);
     };
 
-    var getJson = function (url, cb) {
+    var getJson = function (url) {
         var deferred = Q.defer();
 
         var xhr = new XMLHttpRequest();
@@ -89,7 +91,7 @@
         };
 
         xhr.onerror = function () {
-            cb(xhr.statusText);
+            deferred.reject(new Error(xhr.statusText));
         };
 
         xhr.send();

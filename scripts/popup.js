@@ -28,6 +28,8 @@
             onepassword = new window.OnePassword(items.baseurl);
             onepassword.load().then(function () {
                 btnUnlock.disabled = false;
+            }, function () {
+                error.textContent = "Could not load onepassword data. Make sure you are logged in to dropbox and that the url is correct on the options page.";
             });
 
             deferred.resolve(onepassword);
