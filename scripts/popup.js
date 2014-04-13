@@ -43,9 +43,8 @@
         return tld.getDomain(url.hostname);
     }
 
-    function verify (event) {
+    function unlock (autofill) {
         error.textContent = "";
-        event.preventDefault();
 
         var password = masterpassword.value;
         if (onepassword.verifyPassword(password)) {
@@ -80,6 +79,8 @@
         return deferred.promise;
     }
 
+
+
     function fillForm (webform) {
         Q.all([injectFillFormScript(), onepassword.getKeychainItem(webform.uuid)]).spread(function (result, item) {
             onepassword.decryptKeychainItem(item);
@@ -101,6 +102,9 @@
     }
 
     document.addEventListener("DOMContentLoaded", init);
-    frmVerify.addEventListener("submit", verify);
+    frmVerify.addEventListener("submit", function (event) {
+        event.preventDefault();
+        unlock(false);
+    });
 
 })(this);

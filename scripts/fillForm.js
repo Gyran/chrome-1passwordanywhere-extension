@@ -1,5 +1,5 @@
 (function () {
-    var USERNAME_FIELDS = ["username", "user"];
+    var USERNAME_FIELDS = ["username", "user", "login"];
     var PASSWORD_FIELDS = ["password", "pass"];
 
     function fillForm (keychainItem) {
@@ -80,6 +80,7 @@
     chrome.runtime.onMessage.addListener(
         function(request, sender, sendResponse) {
             fillForm(request);
+            sendResponse();
         }
     );
 })();

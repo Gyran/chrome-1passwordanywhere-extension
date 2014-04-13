@@ -56,7 +56,7 @@
         return deferred.promise;
     };
 
-    OnePassword.prototype.webformsFromDomain = function (domain) {
+    OnePassword.prototype.webformsWithDomain = function (domain) {
         var ret = [];
         for (var index in keychain.contents[TYPE_WEBFORMS]) {
             var webform = keychain.contents[TYPE_WEBFORMS][index];
@@ -71,7 +71,7 @@
         return ret;
     };
 
-    OnePassword.prototype.decryptKeychainItem = function (keychainItem) {
+    OnePassword.prototype.decrypt = function (keychainItem) {
         keychainItem.decrypt(keychain);
     };
 

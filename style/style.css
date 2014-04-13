@@ -1,9 +1,14 @@
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
 .wrapper {
     width: 250px;
 }
 
 .lock {
-    background-image: url(../images/helper/helper-door-lock-glow-0.png);
+    background-image: url(../images/lock.png);
     background-size: 75px 75px;
     width: 75px;
     height: 75px;
@@ -14,20 +19,20 @@
 .masterpasswordInput {
     margin-top: 20px;
     height: 45px;
-    background-image: url(../images/helper/masterpasswordCenter.png);
+    background-image: url(../images/masterpasswordCenter.png);
 }
 
 .masterpasswordLeft {
     height: 45px;
     width: 10px;
-    background-image: url(../images/helper/masterpasswordLeft.png);
+    background-image: url(../images/masterpasswordLeft.png);
     float: left;
 }
 
 .masterpasswordRight {
     height: 45px;
     width: 10px;
-    background-image: url(../images/helper/masterpasswordRight.png);
+    background-image: url(../images/masterpasswordRight.png);
     float: right;;
 }
 
@@ -44,7 +49,7 @@
 }
 
 .unlock {
-    background: transparent url(../images/helper/helper-unlock-button.png) no-repeat;
+    background: transparent url(../images/unlock-button.png) no-repeat;
     background-size: 29px 25px;
     width: 29px;
     height: 25px;
@@ -63,6 +68,20 @@
     margin-top: 10px;
 }
 
-.hide {
-    display: none;
+ul {
+    margin: 0;
+    padding: 0;
 }
+
+.webform {
+    display: block;
+    line-height: 24px;
+    text-decoration: none;
+    color: #000;
+    padding-left: 10px;
+}
+
+.webform:hover {
+    background-image: url(../images/item-selected.png);
+    color: #fff;
+};

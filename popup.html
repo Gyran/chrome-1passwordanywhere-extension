@@ -1,37 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="1passwordanywhere-extension">
 <head>
     <link rel="stylesheet" type="text/css" href="style/style.css">
 </head>
 <body>
-    <div class="wrapper">
-        <div id="unlockWrapper">
-            <div class="lock"></div>
+    <div class="wrapper" ng-view>
 
-            <form id="frmVerify">
-                <div class="masterpasswordInput">
-                    <div class="masterpasswordRight"></div>
-                    <button id="unlock" tabindex="2" class="unlock"></button>
-                    <div class="masterpasswordLeft"></div>
-
-                    <input id="masterpassword" class="masterpassword" type="password" tabindex="1" placeholder="Master Password">
-                </div>
-            </form>
-        </div>
-
-        <div id="unlockedWrapper" class="hide">
-
-        </div>
-
-        <div class="error" id="error"></div>
     </div>
 
-    <script src="scripts/tld.min.js"></script>
-    <script src="scripts/1passwordanywhere.include.js"></script>
-    <script src="scripts/1passwordanywhere.js"></script>
-    <script src="scripts/q.js"></script>
-    <script src="scripts/OnePassword.js"></script>
+    <script src="lib/tld.min.js"></script>
+    <script src="lib/1passwordanywhere.include.js"></script>
+    <script src="lib/q.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-route.min.js"></script>
+    <script src="lib/angular-animate.min.js"></script>
 
-    <script src="scripts/popup.js"></script>
+    <script src="scripts/1passwordanywhere.js"></script>
+    <script src="scripts/OnePassword.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/angular-chrome.js"></script>
+    <script src="scripts/angular-1password.js"></script>
 </body>
 </html>
