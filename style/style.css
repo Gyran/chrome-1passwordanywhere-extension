@@ -84,4 +84,8 @@ ul {
 .webform:hover {
     background-image: url(../images/item-selected.png);
     color: #fff;
-};
+}
+
+.filling .webform {
+    color: #ccc;
+}

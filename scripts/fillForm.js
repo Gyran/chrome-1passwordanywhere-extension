@@ -11,6 +11,8 @@
         if ("password" in designations) {
             fillField(designations.password, PASSWORD_FIELDS);
         }
+
+        return true;
     }
 
     function getDesignations (fields) {
@@ -74,13 +76,19 @@
 
         if (element) {
             element.value = field.value;
+            return true;
         }
+        return false;
     }
 
     chrome.runtime.onMessage.addListener(
         function(request, sender, sendResponse) {
-            fillForm(request);
-            sendResponse();
+            if (fillForm(request)) {
+                sendResponse(true);
+            } else {
+                sendResponse(false);
+            }
+
         }
     );
 })();

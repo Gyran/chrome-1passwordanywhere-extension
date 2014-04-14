@@ -32,21 +32,25 @@
             }
         };
     }])
-    .controller("UnlockedCtrl", ["$scope", "$1password", "$chromeTabs",
-        function ($scope, $1password, $chromeTabs) {
+    .controller("UnlockedCtrl", ["$scope", "$1password", "$chromeTabs", "$window",
+        function ($scope, $1password, $chromeTabs, $window) {
         var currentTab;
+        $scope.filling = false;
 
-        $chromeTabs.getSelected().then(function (tab) {
-            var domain = tld.getDomain((new URL(tab.url)).hostname);
-            currentTab = tab;
-            $scope.webforms = $1password.webformsWithDomain(domain);
+        $scope.onepasswordPromise.then(function () {
+            $chromeTabs.getSelected().then(function (tab) {
+                var domain = tld.getDomain((new URL(tab.url)).hostname);
+                currentTab = tab;
+                $scope.webforms = $1password.webformsWithDomain(domain);
 
-            if ($scope.webforms.length === 1) {
-                $scope.fillForm($scope.webforms[0]);
-            }
+                if ($scope.webforms.length === 1) {
+                    $scope.fillForm($scope.webforms[0]);
+                }
+            });
         });
 
         $scope.fillForm = function (webform) {
+            $scope.filling = true;
             $chromeTabs.executeScript({
                 file: "scripts/fillForm.js"
             }).then(function () {
@@ -54,20 +58,21 @@
                     $1password.decrypt(item);
                     $chromeTabs.sendMessage(currentTab.id, item.decrypted_secure_contents)
                         .then(function () {
-                            console.log("filled in");
+                            $scope.filling = false;
+                            $window.close();
                     });
                 });
             });
         };
     }])
 
-    .run(function ($1password, $location, $chromeSyncStorage) {
+    .run(function ($1password, $location, $chromeSyncStorage, $rootScope) {
         var defaultBaseurl = "https://dl-web.dropbox.com/get/1password/1Password.agilekeychain/data/default/";
 
         $chromeSyncStorage.get({
             "baseurl": defaultBaseurl
         }).then(function (items) {
-            $1password.init(items.baseurl);
+            $rootScope.onepasswordPromise = $1password.init(items.baseurl);
         });
 
         $location.path("/locked");

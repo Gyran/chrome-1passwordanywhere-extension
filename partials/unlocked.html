@@ -1,4 +1,4 @@
-<ul>
+<ul ng-class="{filling: filling}">
     <li ng-repeat="webform in webforms">
         <a ng-click="fillForm(webform)" class="webform" href>
             {{webform.title}}
