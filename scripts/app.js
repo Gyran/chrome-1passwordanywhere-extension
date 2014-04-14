@@ -1,4 +1,4 @@
-(function(window) {
+(function() {
     "use strict";
     angular.module("1passwordanywhere-extension",
         [
@@ -79,4 +79,4 @@
     })
     ;
 
-})(this);
+})();
