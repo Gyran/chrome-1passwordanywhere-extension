@@ -1,84 +1,148 @@
 (function () {
-    var USERNAME_FIELDS = ["username", "user", "login"];
-    var PASSWORD_FIELDS = ["password", "pass"];
+    var TYPE = {
+        "A": [
+            {
+                "element": "textarea"
+            }
+        ],
+        "B": [
+            {
+                "element": "input",
+                "type": "button"
+            }
+        ],
+        "C": [
+            {
+                "element": "input",
+                "type": "checkbox",
+                "bool": "checked"
+            }
+        ],
+        "E": [
+            {
+                "element": "input",
+                "type": "email"
+            }
+        ],
+        "I": [
+            {
+                "element": "input",
+                "type": "submit"
+            }
+        ],
+        "N": [
+            {
+                "element": "input",
+                "type": "number"
+            }
+        ],
+        "P": [
+            {
+                "element": "input",
+                "type": "password"
+            }
+        ],
+        "R": [
+            {
+                "element": "input",
+                "type": "rane"
+            },
+            {
+                "element": "input",
+                "type": "radio"
+            }
+        ],
+        "T": [
+            {
+                "element": "input",
+                "type": "text"
+            }
+        ],
+        "U": [
+            {
+                "element": "input",
+                "type": "url"
+            }
+        ]
+    }
 
     function fillForm (keychainItem) {
-        var designations = getDesignations(keychainItem.fields);
+        var field, filled;
+        console.log(keychainItem);
 
-        if ("username" in designations) {
-            fillField(designations.username, USERNAME_FIELDS);
-        }
-        if ("password" in designations) {
-            fillField(designations.password, PASSWORD_FIELDS);
-        }
-
-        return true;
-    }
-
-    function getDesignations (fields) {
-        var designations = {};
-
-        for (var index in fields) {
-            var field = fields[index];
-
-            if ("designation" in field) {
-                designations[field.designation] = field;
+        filled = false;
+        for (var i = 0; i < keychainItem.fields.length; i++) {
+            field = keychainItem.fields[i];
+            if (fillField(field)) {
+                filled = true;
             }
-        }
+        };
 
-        return designations;
+        return filled;
     }
 
-    function fillField(field, backupNames) {
-        var element = null;
-
+    function fillField (field) {
+        var element, elements, type;
         // see if the element exist on the page
         if ("id" in field) {
             element = document.getElementById(field.id);
-        }
+            if (element) {
+                type = TYPE[field.type];
+                fillValue(element, field, type);
+                return true;
+            }
+        } // element with id not on page
+
         if ("name" in field) {
-            backupNames.unshift(field.name);
-        }
-
-        if (!element) { // no element with that id
-            for (var index in backupNames) {
-                var name = backupNames[index];
-
-                if (element) {
-                    break; // found a match!
+            elements = document.getElementsByName(field.name);
+            if (elements.length > 0) {
+                for (var i = 0; i < elements.length; i++) {
+                    element = elements[i];
+                    for (var j = 0; j < TYPE[field.type].length; j++) {
+                        type = TYPE[field.type][j];
+                        fillValue(element, field, type);
+                    }
                 }
+                return true;
+            }
+        } // element with name not on page
 
-                var selectorElement = "input";
-                var selectorAttributes = [];
-                if (field.type === "T") {
-                    selectorAttributes.push(["name", name]);
-                }if (field.type === "P") {
-                    selectorAttributes.push(["name", name]);
+        // fill all possible elements
+        var filled = false;
+
+        for (var i = 0; i < TYPE[field.type].length; i++) {
+            type = TYPE[field.type][i];
+            elements = document.querySelectorAll(type.element);
+
+            for (var j = 0; j < elements.length; j++) {
+                element = elements[j];
+
+                if ("type" in type) {
+                    if (element.type === type.type) {
+                        fillValue(element, field, type);
+                        filled = true;
+                    }
+                } else {
+                    fillValue(element, field, type);
+                    filled = true;
                 }
-
-                var selector = selectorElement + "[";
-                var divider = "";
-                for (var attIndex in selectorAttributes) {
-                    var selectorAttribute = selectorAttributes[attIndex];
-                    selector += divider + "" + selectorAttribute[0] + "='" + selectorAttribute[1] + "'";
-                    divider = ",";
-                }
-                selector += "]";
-
-                element = document.querySelector(selector);
             }
         }
+        return filled;
+    }
 
-        if (!element) { // could not find any from backup
-
-        }
-
-
-        if (element) {
+    function fillValue (element, field, type) {
+        console.log(type);
+        if ("bool" in type) {
+            console.log(element);
+            if (field.value === "") {
+                element[type.bool] = false;
+            } else {
+                element[type.bool] = true;
+            }
+        } else {
             element.value = field.value;
-            return true;
         }
-        return false;
     }
 
     chrome.runtime.onMessage.addListener(
