@@ -1,25 +1,16 @@
-function save () {
-    var baseurl = document.getElementById("baseurl").value;
+var client = new Dropbox.Client({
+    key: "65mje5j1j340pcq"
+});
+client.authDriver(new Dropbox.AuthDriver.ChromeExtension({
+    receiverPath: "lib/dropbox-js/chrome_oauth_receiver.html"
+}));
 
-    chrome.storage.sync.set({
-        "baseurl": baseurl
-    }, function () {
-        var status = document.getElementById("status");
-        status.textContent = "Options saved";
-        setTimeout(function () {
-            status.textContent = "";
-        }, 750);
-    });
-}
+client.authenticate(function (error) {
+    if (error) {
 
-function restore () {
-    // default: https://dl-web.dropbox.com/get/1password/1Password.agilekeychain/data/default/
-    chrome.storage.sync.get({
-        "baseurl": "https://dl-web.dropbox.com/get/1password/1Password.agilekeychain/data/default/"
-    }, function (items) {
-        document.getElementById("baseurl").value = items.baseurl;
-    });
-}
-
-document.addEventListener("DOMContentLoaded", restore);
-document.getElementById("save").addEventListener("click", save);
+    } else {
+        if (client.isAuthenticated()) {
+            document.write("You are now logged in to Dropbox");
+        }
+    }
+});

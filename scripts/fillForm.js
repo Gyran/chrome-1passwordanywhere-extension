@@ -64,11 +64,10 @@
                 "type": "url"
             }
         ]
-    }
+    };
 
     function fillForm (keychainItem) {
         var field, filled;
-        console.log(keychainItem);
 
         filled = false;
         for (var i = 0; i < keychainItem.fields.length; i++) {
@@ -76,13 +75,13 @@
             if (fillField(field)) {
                 filled = true;
             }
-        };
+        }
 
         return filled;
     }
 
     function fillField (field) {
-        var element, elements, type;
+        var element, elements, type, i, j;
         // see if the element exist on the page
         if ("id" in field) {
             element = document.getElementById(field.id);
@@ -96,9 +95,9 @@
         if ("name" in field) {
             elements = document.getElementsByName(field.name);
             if (elements.length > 0) {
-                for (var i = 0; i < elements.length; i++) {
+                for (i = 0; i < elements.length; i++) {
                     element = elements[i];
-                    for (var j = 0; j < TYPE[field.type].length; j++) {
+                    for (j = 0; j < TYPE[field.type].length; j++) {
                         type = TYPE[field.type][j];
                         fillValue(element, field, type);
                     }
@@ -110,11 +109,11 @@
         // fill all possible elements
         var filled = false;
 
-        for (var i = 0; i < TYPE[field.type].length; i++) {
+        for (i = 0; i < TYPE[field.type].length; i++) {
             type = TYPE[field.type][i];
             elements = document.querySelectorAll(type.element);
 
-            for (var j = 0; j < elements.length; j++) {
+            for (j = 0; j < elements.length; j++) {
                 element = elements[j];
 
                 if ("type" in type) {
@@ -132,7 +131,6 @@
     }
 
     function fillValue (element, field, type) {
-        console.log(type);
         if ("bool" in type) {
             console.log(element);
             if (field.value === "") {

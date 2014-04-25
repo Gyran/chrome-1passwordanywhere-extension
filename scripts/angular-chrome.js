@@ -45,10 +45,23 @@
 
             return deferred.promise;
         };
+
+        this.create = function (createProperties) {
+            var deferred = $q.defer();
+
+            chrome.tabs.create(createProperties, function (tab) {
+                deferred.resolve(tab);
+            });
+
+            return deferred.promise;
+        };
     });
 
     angular.module("ngChrome").factory("$chromeSyncStorage", function ($q) {
         return new ChromeStorage($q, chrome.storage.sync);
+    });
+    angular.module("ngChrome").factory("$chromeLocalStorage", function ($q) {
+        return new ChromeStorage($q, chrome.storage.local);
     });
 
     function ChromeStorage($q, storageArea) {
@@ -107,5 +120,17 @@
             return deferred.promise;
         }
     };
+
+    angular.module("ngChrome").service("$chromeRuntime", function ($q) {
+        this.sendMessage = function (message) {
+            var deferred = $q.defer();
+
+            chrome.runtime.sendMessage(message, function (response) {
+                deferred.resolve(response);
+            });
+
+            return deferred.promise;
+        };
+    });
 
 })();

@@ -5,10 +5,10 @@
     angular.module("ng1password").service("$1password", function ($q, $window) {
         var onepassword;
 
-        this.init = function (url) {
+        this.init = function (dp) {
             var deferred = $q.defer();
 
-            onepassword = new $window.OnePassword(url);
+            onepassword = new OnePassword(dp);
             onepassword.load().then(function () {
                 deferred.resolve();
             }, function () {

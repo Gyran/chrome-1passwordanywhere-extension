@@ -1,8 +1,9 @@
 (function (window) {
     var keychain = null;
+    var dataProvider = null;
 
-    function OnePassword (url) {
-        this.baseUrl = url;
+    function OnePassword (dp) {
+        dataProvider = dp;
         keychain = new Keychain();
     }
 
@@ -20,7 +21,7 @@
     OnePassword.prototype.getContents = function () {
         var deferred = Q.defer();
 
-        getJson(this.baseUrl + "contents.js").then(function (contents) {
+        dataProvider.getContents().then(function (contents) {
             keychain.setContents(contents);
             deferred.resolve();
         }, function () {
@@ -32,7 +33,7 @@
     OnePassword.prototype.getEncryptionKeys = function () {
         var deferred = Q.defer();
 
-        getJson(this.baseUrl + "encryptionKeys.js").then(function (keys) {
+        dataProvider.getEncryptionKeys().then(function (keys) {
             keychain.setEncryptionKeys(keys);
             deferred.resolve();
         }, function () {
@@ -49,7 +50,7 @@
     OnePassword.prototype.getKeychainItem = function (entryid) {
         var deferred = Q.defer();
 
-        getJson(this.baseUrl + entryid + ".1password").then(function (entry) {
+        dataProvider.getKeychainItem(entryid).then(function (entry) {
             deferred.resolve(new KeychainItem(entry, keychain));
         });
 
@@ -73,30 +74,6 @@
 
     OnePassword.prototype.decrypt = function (keychainItem) {
         keychainItem.decrypt(keychain);
-    };
-
-    var getJson = function (url) {
-        var deferred = Q.defer();
-
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", url, true);
-        xhr.onload = function (e) {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    deferred.resolve(JSON.parse(xhr.responseText));
-                } else {
-                    deferred.reject(new Error(xhr.statusText));
-                }
-            }
-        };
-
-        xhr.onerror = function () {
-            deferred.reject(new Error(xhr.statusText));
-        };
-
-        xhr.send();
-
-        return deferred.promise;
     };
 
     window.OnePassword = OnePassword;
