@@ -1,12 +1,16 @@
 1Passwordanywhere extension
 ===========================
-Chrome extension to use 1Passwordanywhere to fill-in password on any platform. To use it you need to be logged in to dropbox.
-If your 1password files is in another location than "Dropbox/1password/1Password.agilekeychain" you need to change the baseUrl in the options page.
+Chrome extension that is a Dropbox application so it can access your Vault if it is synced to Dropbox.
+Go to the extensions options page to authenticate the app to Dropbox.
 
 Installation
 --------------------
 * Clone
 * Follow https://developer.chrome.com/extensions/getstarted#unpacked
+
+Prerequisites
+--------------------
+* 1Password synced to Dropbox
 
 Usage
 -------------------
