@@ -4,7 +4,9 @@
         [
             "ngRoute",
             "ng1password",
-            "ngChrome"
+            "ngChrome",
+            "ngDropbox",
+            "ng1password.Dropbox",
         ]
     )
     .config(["$routeProvider", function ($routeProvider) {
@@ -37,7 +39,7 @@
         var currentTab;
         $scope.filling = false;
 
-        $scope.onepasswordPromise.then(function () {
+        $scope.initPromise.then(function () {
             $chromeTabs.getSelected().then(function (tab) {
                 var domain = tld.getDomain((new URL(tab.url)).hostname);
                 currentTab = tab;
@@ -66,13 +68,16 @@
         };
     }])
 
-    .run(function ($1password, $location, $chromeSyncStorage, $rootScope) {
-        var defaultBaseurl = "https://dl-web.dropbox.com/get/1password/1Password.agilekeychain/data/default/";
+    .run(function ($q, $1password, $location, $rootScope, $Dropbox, $1pDropboxDataprovider, $chromeTabs) {
+        var deferred = $q.defer();
+        $rootScope.initPromise = deferred.promise;
 
-        $chromeSyncStorage.get({
-            "baseurl": defaultBaseurl
-        }).then(function (items) {
-            $rootScope.onepasswordPromise = $1password.init(items.baseurl);
+        $Dropbox.authenticate({ interactive: false }).then(function () {
+            $1password.init($1pDropboxDataprovider).then(function () {
+                deferred.resolve();
+            });
+        }, function () {
+            $chromeTabs.create({ url: "options.html"});
         });
 
         $location.path("/locked");
