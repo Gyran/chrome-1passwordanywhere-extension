@@ -2,12 +2,6 @@
     "use strict";
 
     angular.module("ng1password.Dropbox", ["ngDropbox"]);
-    angular.module("ng1password.Dropbox").config(["$DropboxProvider", function ($DropboxProvider) {
-        $DropboxProvider.config("65mje5j1j340pcq",
-            new Dropbox.AuthDriver.ChromeExtension({
-                receiverPath: "lib/dropbox-js/chrome_oauth_receiver.html"
-            }));
-    }]);
 
     angular.module("ng1password.Dropbox").service("$1pDropboxDataprovider", function ($q, $Dropbox) {
         var rootPath = "1password/1Password.agilekeychain/data/default/";
