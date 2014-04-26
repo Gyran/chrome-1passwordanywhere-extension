@@ -22,6 +22,9 @@
             .otherwise({ redirectTo: "/locked" })
             ;
     }])
+    .config(["$DropboxProvider", function ($DropboxProvider) {
+        $DropboxProvider.config("65mje5j1j340pcq");
+    }])
     .controller("LockedCtrl", ["$scope", "$location", "$1password",
         function ($scope, $location, $1password) {
         $scope.error = false;

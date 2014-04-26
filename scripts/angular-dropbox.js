@@ -9,7 +9,9 @@
             client = new Dropbox.Client({
                 key: appKey
             });
-            client.authDriver(authDriver);
+            if (authDriver) {
+                client.authDriver(authDriver);
+            }
         };
 
         this.$get = ["$q", function ($q) {
@@ -23,7 +25,7 @@
 
                     client.authenticate(options, function (error) {
                         if (!client.isAuthenticated()) {
-                            deferred.reject();
+                            deferred.reject(error);
                         } else {
                             deferred.resolve();
                         }
@@ -46,6 +48,9 @@
                 },
                 isAuthenticated: function () {
                     return client.isAuthenticated();
+                },
+                reset: function () {
+                    return client.reset();
                 }
 
             };

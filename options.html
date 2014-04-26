@@ -1,12 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="1passwordanywhere-extension-options">
     <head>
         <title>1password anywhere extension</title>
+        <link rel="stylesheet" type="text/css" href="style/options.css">
     </head>
     <body>
-        <div id="status"></div>
 
+        <div class="wrapper" ng-view>
+
+        </div>
+
+        <script src="lib/angular.min.js"></script>
+        <script src="lib/angular-route.min.js"></script>
         <script src="lib/dropbox-js/dropbox.min.js"></script>
+
+        <script src="scripts/angular-dropbox.js"></script>
         <script src="scripts/options.js"></script>
     </body>
 </html>
