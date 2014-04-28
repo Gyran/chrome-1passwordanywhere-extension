@@ -2,8 +2,13 @@
   "manifest_version": 2,
 
   "name": "1Passwordanywhere Extension",
-  "description": "Fill in your 1Password passwords using 1Passwordanywhere on any platform",
-  "version": "0.1",
+  "description": "Fill in your 1Password passwords using 1Passwordanywhere on any platform. This extension has no association with 1Password or AgileBits!",
+  "version": "0.2",
+  "icons": {
+    "16": "images/app-icon-16.png",
+    "48": "images/app-icon-48.png",
+    "128": "images/app-icon-128.png"
+  },
 
   "commands": {
     "_execute_page_action": {
@@ -15,7 +20,11 @@
 
   "browser_action": {
     "default_popup": "popup.html",
-    "default_title": "1Passwordanywhere Extension"
+    "default_title": "1Passwordanywhere Extension",
+    "default_icon": {
+        "19": "images/app-icon-19.png",
+        "38": "images/app-icon-38.png"
+      }
   },
 
   "permissions": [
