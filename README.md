@@ -15,3 +15,7 @@ Prerequisites
 Usage
 -------------------
 Go to a login-page and click the extension. Fill in your master password and the login-form should be filled in.
+
+Disclaimer
+--------------------
+This app has no association with 1Password or AgileBits!
