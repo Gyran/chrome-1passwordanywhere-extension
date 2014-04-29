@@ -61,11 +61,15 @@
         var ret = [];
         for (var index in keychain.contents[TYPE_WEBFORMS]) {
             var webform = keychain.contents[TYPE_WEBFORMS][index];
-            var url = new URL(webform.domain);
-            var webformDomain = tld.getDomain(url.hostname);
+            try {
+                var url = new URL(webform.domain);
+                var webformDomain = tld.getDomain(url.hostname);
 
-            if (domain === webformDomain) {
-                ret.push(webform);
+                if (domain === webformDomain) {
+                    ret.push(webform);
+                }
+            } catch (err) {
+                console.log("ERROR! when trying to populate webforms", err, webform);
             }
         }
 
