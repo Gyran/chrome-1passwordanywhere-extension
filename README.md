@@ -3,10 +3,14 @@
 Chrome extension that is a Dropbox application so it can access your Vault if it is synced to Dropbox.
 Go to the extensions options page to authenticate the app to Dropbox.
 
+Chrome Web Store
+--------------------------
+https://chrome.google.com/webstore/detail/1passwordanywhere-extensi/mbgijoecaafppmdmlgjpahfhekafldfj
+
 Installation
 --------------------
 * Clone
-* Follow https://developer.chrome.com/extensions/getstarted#unpacked
+* Follow https://developer.chrome.com/extensions/getstarted#unpacked and add the 1passwordanywhere-extension folder.
 
 Prerequisites
 --------------------
