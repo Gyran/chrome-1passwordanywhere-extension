@@ -28,25 +28,34 @@
     .controller("LockedCtrl", ["$scope", "$location", "$1password",
         function ($scope, $location, $1password) {
         $scope.error = false;
+        $scope.unlocking = false;
 
         $scope.unlock = function () {
-            if ($1password.unlock($scope.masterpassword)) {
-                $location.path("/unlocked");
-            } else {
-                $scope.error = true;
-            }
+            $scope.unlocking = true;
+            $scope.error = false;
+
+            $scope.initPromise.then(function () {
+                if ($1password.unlock($scope.masterpassword)) {
+                    $location.path("/unlocked");
+                } else {
+                    $scope.error = true;
+                }
+                $scope.unlocking = false;
+            });
         };
     }])
     .controller("UnlockedCtrl", ["$scope", "$1password", "$chromeTabs", "$window",
         function ($scope, $1password, $chromeTabs, $window) {
         var currentTab;
         $scope.filling = false;
+        $scope.unlocking = true;
 
         $scope.initPromise.then(function () {
             $chromeTabs.getSelected().then(function (tab) {
                 var domain = tld.getDomain((new URL(tab.url)).hostname);
                 currentTab = tab;
                 $scope.webforms = $1password.webformsWithDomain(domain);
+                $scope.unlocking = false;
 
                 if ($scope.webforms.length === 1) {
                     $scope.fillForm($scope.webforms[0]);
@@ -56,6 +65,7 @@
 
         $scope.fillForm = function (webform) {
             $scope.filling = true;
+
             $chromeTabs.executeScript({
                 file: "scripts/fillForm.js"
             }).then(function () {

@@ -1,15 +1,15 @@
-<div class="lock"></div>
+<div class="lock" ng-class="{unlocking: unlocking}"></div>
 
 <form ng-submit="unlock()">
     <div class="masterpasswordInput">
         <div class="masterpasswordRight"></div>
-        <button id="unlock" tabindex="2" class="unlock"></button>
+        <button id="unlock" tabindex="2" class="unlock" ng-class="{disabled: loading}" ng-disabled="loading"></button>
         <div class="masterpasswordLeft"></div>
 
         <input id="masterpassword" class="masterpassword" type="password" tabindex="1" placeholder="Master Password" ng-model="masterpassword">
 
         <div ng-show="error" class="error">
-            Wrong username or password
+            Wrong master password
         </div>
     </div>
 </form>

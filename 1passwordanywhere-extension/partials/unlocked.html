@@ -1,4 +1,6 @@
-<ul ng-class="{filling: filling}">
+<div class="lock" ng-class="{unlocking: unlocking}" ng-show="unlocking"></div>
+
+<ul ng-class="{filling: filling}" ng-hide="unlocking">
     <li ng-repeat="webform in webforms">
         <a ng-click="fillForm(webform)" class="webform" href>
             {{webform.title}}

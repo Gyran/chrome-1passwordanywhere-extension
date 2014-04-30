@@ -13,8 +13,12 @@ html, body {
     width: 75px;
     height: 75px;
     margin: 10px auto;
-
 }
+
+.lock.unlocking {
+    -webkit-animation:spin 2s linear infinite;
+}
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
 
 .masterpasswordInput {
     margin-top: 20px;
