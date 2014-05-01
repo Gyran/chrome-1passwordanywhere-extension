@@ -46,21 +46,16 @@
     }])
     .controller("UnlockedCtrl", ["$scope", "$1password", "$chromeTabs", "$window",
         function ($scope, $1password, $chromeTabs, $window) {
-        var currentTab;
         $scope.filling = false;
         $scope.unlocking = true;
 
         $scope.initPromise.then(function () {
-            $chromeTabs.getSelected().then(function (tab) {
-                var domain = tld.getDomain((new URL(tab.url)).hostname);
-                currentTab = tab;
-                $scope.webforms = $1password.webformsWithDomain(domain);
-                $scope.unlocking = false;
+            $scope.webforms = $scope.webformsCurrentDomain;
+            $scope.unlocking = false;
 
-                if ($scope.webforms.length === 1) {
-                    $scope.fillForm($scope.webforms[0]);
-                }
-            });
+            if ($scope.webforms.length === 1) {
+                $scope.fillForm($scope.webforms[0]);
+            }
         });
 
         $scope.fillForm = function (webform) {
@@ -71,7 +66,7 @@
             }).then(function () {
                 $1password.getKeychainItem(webform.uuid).then(function (item) {
                     $1password.decrypt(item);
-                    $chromeTabs.sendMessage(currentTab.id, item.decrypted_secure_contents)
+                    $chromeTabs.sendMessage($scope.currentTabId, item.decrypted_secure_contents)
                         .then(function () {
                             $scope.filling = false;
                             $window.close();
@@ -87,7 +82,13 @@
 
         $Dropbox.authenticate({ interactive: false }).then(function () {
             $1password.init($1pDropboxDataprovider).then(function () {
-                deferred.resolve();
+                $chromeTabs.getSelected().then(function (tab) {
+                    var domain = tld.getDomain((new URL(tab.url)).hostname);
+                    $rootScope.webformsCurrentDomain = $1password.webformsWithDomain(domain);
+                    $rootScope.currentTabId = tab.id;
+
+                    deferred.resolve();
+                });
             });
         }, function () {
             $chromeTabs.create({ url: "options.html"});
