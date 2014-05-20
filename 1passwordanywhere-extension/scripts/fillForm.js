@@ -107,23 +107,25 @@
         } // element with name not on page
 
         // fill all possible elements
+        // but only if the field has a designation
         var filled = false;
+        if ("designation" in field) {
+            for (i = 0; i < TYPE[field.type].length; i++) {
+                type = TYPE[field.type][i];
+                elements = document.querySelectorAll(type.element);
 
-        for (i = 0; i < TYPE[field.type].length; i++) {
-            type = TYPE[field.type][i];
-            elements = document.querySelectorAll(type.element);
+                for (j = 0; j < elements.length; j++) {
+                    element = elements[j];
 
-            for (j = 0; j < elements.length; j++) {
-                element = elements[j];
-
-                if ("type" in type) {
-                    if (element.type === type.type) {
+                    if ("type" in type) {
+                        if (element.type === type.type) {
+                            fillValue(element, field, type);
+                            filled = true;
+                        }
+                    } else {
                         fillValue(element, field, type);
                         filled = true;
                     }
-                } else {
-                    fillValue(element, field, type);
-                    filled = true;
                 }
             }
         }
