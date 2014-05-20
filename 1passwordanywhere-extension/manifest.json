@@ -3,7 +3,7 @@
 
   "name": "1Passwordanywhere Extension",
   "description": "Fill in your 1Password passwords using 1Passwordanywhere on any platform. This extension has no association with 1Password/AgileBits",
-  "version": "0.4",
+  "version": "0.5",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhYaOou0TNo1ZarkLQw0BfOlWiC4d//C6t+y+KES9w9a9tt0ok0LVBK5h4IFCV3CRPuu8EI7HClbvheNMziMyNoEWVSejMMwWDToeNE6688DRq2mJ+YEos2rQqNGNzt+CMZgNt5cp2ZJGs0H/nEQWKTHn4G7/PZssnQPvB51sx7YF7uhBSgP/aK4gslWJuWkE63P2uUglxO2zhWi9z3lfVvSRSdFRPlt2zwrKkKWk5iNMTf+Gc5livpUkyI4pvQ4RqfIaR91V9VrR0xHI7SHxC1X1G94doZErfP5c0hCSfvdaRWueGOAVTuv332XApX3fp57XiMYKkNZy7FZG0rrZAwIDAQAB",
   "icons": {
     "16": "images/app-icon-16.png",
